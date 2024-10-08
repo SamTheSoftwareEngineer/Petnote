@@ -18,7 +18,7 @@ PET_TYPES = (
     ("Fish", "Fish"),
     ("Reptile", "Reptile"),
     ("Amphibian", "Amphibian"),
-    ('small animal, Small Animal'),
+    ("small animal", "Small Animal"),
     ("Other", "Other"),
 )
 
@@ -35,9 +35,9 @@ ACTIVITY_TYPES = (
     ("walking", "Walking"),
     ("running", "Running"),
     ("swimming", "Swimming"),
-    ("Playing", "playing")
-    ("Feeding", "feeding"),
-    ("Grooming", "grooming"),
+    ("playing", "Playing"),
+    ("feeding", "Feeding"),
+    ("grooming", "Grooming"),
     ("medication", "Medication"),
     ("other", "Other"),
 )
