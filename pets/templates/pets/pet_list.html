@@ -1,27 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet List</title>
-</head>
-<body>
-    <h1>Pet List</h1>
-    <a href="{% url 'add_pet' %}">Add Pet</a>
-    <ul>
+{% extends 'base.html' %}
+
+{% block title %}Pet List{% endblock %}
+
+{% block content %}
+    <h1 class="text-3xl font-bold mb-4">Pet List</h1>
+    <a href="{% url 'add_pet' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Pet</a>
+    <ul class="mt-4 space-y-2">
         {% for pet in pets %}
-            <li>
-                {% if pet.id %}
-                    <a href="{% url 'pet_detail' pet.id %}">{{ pet.name }}</a>
-                {% else %}
-                    <strong>{{ pet.name }}</strong>
-                {% endif %}
-                ({{ pet.species }})
+            <li class="bg-white shadow-md rounded p-4">
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'pet_detail' pet.id %}" class="text-blue-500 hover:underline">{{ pet.name }}</a>
+                </h2>
+                <p class="text-gray-600">Species: {{ pet.species }}</p>
             </li>
         {% empty %}
-            <li>No pets available.</li>
+            <li class="text-gray-600">No pets available.</li>
         {% endfor %}
     </ul>
-</body>
-</html>
-
+{% endblock %}

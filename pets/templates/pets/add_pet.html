@@ -1,16 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pet</title>
-</head>
-<body>
-    <h1>Add a New Pet</h1>
-    <form method="post" enctype="multipart/form-data">
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+    <!-- Header -->
+    <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">Add a New Pet</h1>
+
+    <!-- Form -->
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Pet</button>
+        
+        <!-- Loop through form fields for consistent styling -->
+        {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-2">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" 
+                    class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
+                Add Pet
+            </button>
+        </div>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
+
