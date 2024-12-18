@@ -7,10 +7,16 @@
 </head>
 <body>
     <h1>Pet List</h1>
+    <a href="{% url 'add_pet' %}">Add Pet</a>
     <ul>
         {% for pet in pets %}
             <li>
-                <strong>{{ pet.name }}</strong> ({{ pet.species }})
+                {% if pet.id %}
+                    <a href="{% url 'pet_detail' pet.id %}">{{ pet.name }}</a>
+                {% else %}
+                    <strong>{{ pet.name }}</strong>
+                {% endif %}
+                ({{ pet.species }})
             </li>
         {% empty %}
             <li>No pets available.</li>
@@ -18,3 +24,4 @@
     </ul>
 </body>
 </html>
+
