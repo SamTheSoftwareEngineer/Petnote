@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg mt-10 text-center">
+    <h1 class="text-3xl font-bold text-red-600 mb-6">Delete {{ pet.name }}?</h1>
+    <p class="text-gray-700 mb-4">
+        Are you sure you want to delete <strong>{{ pet.name }}</strong>? This action cannot be undone.
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
+            Yes, Delete
+        </button>
+        <a href="{% url 'pet_detail' pet.id %}" 
+           class="ml-4 text-gray-600 hover:text-gray-800">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

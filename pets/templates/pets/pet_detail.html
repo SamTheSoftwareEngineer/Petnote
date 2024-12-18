@@ -2,7 +2,6 @@
 
 {% block content %}
 <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-    <!-- Pet Photo and Header -->
     <div class="flex items-center justify-between border-b pb-4 mb-4">
         <div class="flex items-center">
             {% if pet.photo %}
@@ -14,8 +13,7 @@
                 <p class="text-lg text-gray-500">Species: {{ pet.species }}</p>
             </div>
         </div>
-        <a href="{% url 'pet_list' %}" 
-           class="text-blue-500 hover:text-blue-700 font-semibold">
+        <a href="{% url 'pet_list' %}" class="text-blue-500 hover:text-blue-700 font-semibold">
             &larr; Back to Pet List
         </a>
     </div>
@@ -24,14 +22,20 @@
     <div class="space-y-4">
         <p class="text-lg"><strong class="text-gray-700">Breed:</strong> {{ pet.breed }}</p>
         <p class="text-lg"><strong class="text-gray-700">Birth Date:</strong> {{ pet.birth_date }}</p>
+        <p class="text-lg"><strong class="text-gray-700">Weight:</strong> {{ pet.weight }}</p>
+
     </div>
 
-    <!-- CTA Section -->
-    <div class="mt-6 text-center">
-        <button class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
-            Edit Details
-        </button>
+    <!-- Action Buttons -->
+    <div class="mt-6 flex justify-end space-x-4">
+        <a href="{% url 'edit_pet' pet.id %}" 
+           class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            Edit
+        </a>
+        <a href="{% url 'delete_pet' pet.id %}" 
+           class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+            Delete
+        </a>
     </div>
 </div>
 {% endblock %}
-

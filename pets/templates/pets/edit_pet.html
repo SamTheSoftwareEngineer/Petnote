@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">Edit {{ pet.name }}</h1>
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-2">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="text-center">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                Update Pet
+            </button>
+            <a href="{% url 'pet_detail' pet.id %}" 
+               class="ml-4 text-gray-600 hover:text-gray-800">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
