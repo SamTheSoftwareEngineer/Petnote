@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def pet_list(request):
-    pets = Pet.objects.all() # get all pets from the database
+    pets = Pet.objects.filter(user=request.user) # get all associated pets from the database
     return render(request, 'pets/pet_list.html', {'pets': pets})
 
+@login_required
 def add_pet(request):
     if request.method == 'POST':
         form = PetForm(request.POST, request.FILES)
@@ -25,10 +26,12 @@ def add_pet(request):
 
     return render(request, 'pets/add_pet.html', {'form': form})
 
+@login_required
 def pet_detail(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
     return render(request, 'pets/pet_detail.html', {'pet': pet})
 
+@login_required
 def edit_pet(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
     if request.method == 'POST':
@@ -40,9 +43,10 @@ def edit_pet(request, pet_id):
         form = PetForm(instance=pet)
     return render(request, 'pets/edit_pet.html', {'form': form, 'pet': pet})
 
+@login_required
 def delete_pet(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
-    if request.method =="POST":
+    if request.method == "POST":
         pet.delete()
         return redirect('pet_list')
     return render(request, 'pets/delete_pet.html', {'pet': pet})

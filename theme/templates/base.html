@@ -11,9 +11,6 @@
     <!-- Header -->
     <header class="bg-blue-500 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">
-                <a href="{% url 'pet_list' %}">Petnote</a>
-            </h1>
             <nav>
                 <div>
                     {% if user.is_authenticated %}
