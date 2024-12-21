@@ -5,9 +5,8 @@
 {% block content %}
 <div class="bg-white p-4 shadow rounded-lg">
     <h1 class="text-2xl font-bold mb-4">Profile</h1>
-
     {% if profile.image %}
-        <img src="{{ profile.image }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-4">
+        <img src="{{ profile.image.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-4">
     {% else %}
         <div class="w-32 h-32 rounded-full bg-gray-300 mb-4"></div>
     {% endif %}

@@ -11,22 +11,28 @@
     <!-- Header -->
     <header class="bg-blue-500 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <nav>
-                <div>
-                    {% if user.is_authenticated %}
-                        <span class="mr-4">Welcome, {{ user.username }}</span>
-                        <form action="{% url 'logout' %}" method="post" class="inline">
-                            {% csrf_token %}
-                            <button type="submit" class="text-white hover:underline bg-transparent border-0 cursor-pointer">
-                                Logout
-                            </button>
-                        </form>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="mr-4 text-white hover:underline">Login</a>
-                        <a href="{% url 'signup' %}" class="text-white hover:underline">Sign Up</a>
-                    {% endif %}
-                </div>
-            </nav>
+            <!-- Left Section -->
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="mr-4">Welcome, {{ user.username }}</span>
+                    <a href="{% url 'add_pet' %}" class="ml-4 text-white hover:underline">Add Pet</a>
+                    <a href="{% url 'pet_list' %}" class="ml-4 text-white hover:underline">Pet List</a>
+                {% endif %}
+            </div>
+            <!-- Right Section -->
+            <div>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white hover:underline bg-transparent border-0 cursor-pointer">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="mr-4 text-white hover:underline">Login</a>
+                    <a href="{% url 'signup' %}" class="text-white hover:underline">Sign Up</a>
+                {% endif %}
+            </div>
         </div>
     </header>
 
