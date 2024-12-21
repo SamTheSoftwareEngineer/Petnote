@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'pets',
     'petnote_core',
     'activities',
+    'django_fastdev',
 ]
 
 TAILWIND_APP_NAME = 'theme' 
