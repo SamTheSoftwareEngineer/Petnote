@@ -38,3 +38,6 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'core/signup.html', {'form': form})
+
+def thanks_view(request):
+    return render(request, 'core/thanks.html')
