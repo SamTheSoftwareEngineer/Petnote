@@ -14,9 +14,11 @@
             <!-- Left Section -->
             <div>
                 {% if user.is_authenticated %}
-                    <span class="mr-4">Welcome, {{ user.username }}</span>
+                <a href="{% url 'profile' %}" class="mr-4">
+                    <span>Welcome, {{ user.username }}</span>
+                </a>
                     <a href="{% url 'add_pet' %}" class="ml-4 text-white hover:underline">Add Pet</a>
-                    <a href="{% url 'pet_list' %}" class="ml-4 text-white hover:underline">Pet List</a>
+                    <a href="{% url 'pet_list' %}" class="ml-4 text-white hover:underline">My Pets</a>
                 {% endif %}
             </div>
             <!-- Right Section -->

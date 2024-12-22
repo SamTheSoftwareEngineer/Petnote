@@ -11,6 +11,8 @@ urlpatterns = [
     # Login
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html', next_page='profile'), name='login'),
     # Logout
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='thanks'), name='logout'),
+    # Thanks
+    path('thanks/', views.thanks_view, name='thanks'),
 ]
 
