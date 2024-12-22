@@ -14,7 +14,7 @@
             </div>
         </div>
         <a href="{% url 'pet_list' %}" class="text-blue-500 hover:text-blue-700 font-semibold">
-            &larr; Back to Pet List
+            &larr; Back to your pets
         </a>
     </div>
 
@@ -23,6 +23,7 @@
         <p class="text-lg"><strong class="text-gray-700">Breed:</strong> {{ pet.breed }}</p>
         <p class="text-lg"><strong class="text-gray-700">Birth Date:</strong> {{ pet.birth_date }}</p>
         <p class="text-lg"><strong class="text-gray-700">Weight:</strong> {{ pet.weight }}</p>
+        <p class="text-lg"><strong class="text-gray-700">Age:</strong> {{ pet.age }}</p>
 
     </div>
 
