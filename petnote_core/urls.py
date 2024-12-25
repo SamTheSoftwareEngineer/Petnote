@@ -14,5 +14,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='thanks'), name='logout'),
     # Thanks
     path('thanks/', views.thanks_view, name='thanks'),
+    # Update username
+    path('update-username/', views.update_username, name='update_username'),
 ]
 
