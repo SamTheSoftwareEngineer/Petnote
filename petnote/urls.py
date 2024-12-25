@@ -24,5 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("petnote_core.urls")),
     path("pets/", include("pets.urls")),
-    # path("activities/", include("activities.urls")),
+    path("activities/", include("activities.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
