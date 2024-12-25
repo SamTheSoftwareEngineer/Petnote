@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Update Username</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
+            Save Changes
+        </button>
+    </form>
+    <br>
+    <a href="{% url 'profile' %}" class="text-gray-600 hover:underline">Cancel</a>
+</div>
+{% endblock %}
