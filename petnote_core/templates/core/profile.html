@@ -11,6 +11,8 @@
         <div class="w-32 h-32 rounded-full bg-gray-300 mb-4"></div>
     {% endif %}
 
+    <a href="{% url 'update_username' %}" class="text-blue-500 hover:underline">Change Username</a>
+
     <h2 class="text-lg font-semibold">Welcome, {{ request.user.username }}</h2>
     {% if pets_count %}
         <p>Total Pets: {{ pets_count }}</p>
