@@ -7,6 +7,3 @@ __pycache__/
 .DS_Store
 /static/
 media/
-activities/migrations/0002_activity_notes.py
-activities/migrations/0003_rename_is_complete_activity_is_completed_and_more.py
-activities/migrations/0004_activity_user.py
