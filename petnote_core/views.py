@@ -6,7 +6,12 @@ from .forms import UserProfileForm, UpdateUsernameForm
 from pets.models import Pet
 
 def index(request):
-    return render(request, 'core/index.html')
+    # Check if the user is authenticated and redirect to the pet page 
+    if request.user.is_authenticated:
+        return redirect('pet_list')
+    else:
+        # If the user is not authenticated, render the index template
+        return render(request, 'core/index.html')
 
 @login_required
 def profile_view(request):
