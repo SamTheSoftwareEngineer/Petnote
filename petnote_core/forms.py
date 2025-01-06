@@ -2,7 +2,17 @@ from django import forms
 from .models import UserProfile
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
 
+class UserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("This email address is already in use.")
+        return email
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -22,3 +32,5 @@ class UpdateUsernameForm(forms.ModelForm):
         if User.objects.filter(username=username).exclude(id=self.instance.id).exists():
             raise ValidationError("This username is already taken.")
         return username
+
+
