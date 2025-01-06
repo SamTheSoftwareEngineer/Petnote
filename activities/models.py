@@ -9,7 +9,7 @@ class Activity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=100)
     activity = models.CharField(max_length=100)
-    date_completed = models.DateTimeField(auto_now_add=True)
+    date_completed = models.DateTimeField()
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False)
     notes = models.TextField(blank=True)
