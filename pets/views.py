@@ -3,7 +3,6 @@ from .models import Pet
 from activities.models import Activity
 from .forms import PetForm
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 # Create your views here.
 @login_required
 def pet_list(request):
