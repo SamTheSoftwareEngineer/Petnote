@@ -16,5 +16,7 @@ urlpatterns = [
     path('thanks/', views.thanks_view, name='thanks'),
     # Update username
     path('update-username/', views.update_username, name='update_username'),
+    # Reset password 
+    # path('password_reset/', views.password_reset, name='password_reset')
 ]
 
