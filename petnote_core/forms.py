@@ -33,4 +33,5 @@ class UpdateUsernameForm(forms.ModelForm):
             raise ValidationError("This username is already taken.")
         return username
 
+    
 
