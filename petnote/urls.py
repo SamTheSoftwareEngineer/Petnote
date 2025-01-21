@@ -21,14 +21,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("petnote_core.urls")),
-    path("pets/", include("pets.urls")),
-    path("activities/", include("activities.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 if not settings.TESTING:
     urlpatterns = [
-        *urlpatterns,
-    ] + debug_toolbar_urls()
+        path("admin/", admin.site.urls),
+        path("", include("petnote_core.urls")),
+        path("pets/", include("pets.urls")),
+        path("activities/", include("activities.urls")),
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + debug_toolbar_urls()
