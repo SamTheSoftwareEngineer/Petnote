@@ -59,13 +59,3 @@ def update_username(request):
 
     return render(request, 'core/update_username.html', {'form': form})
 
-# def password_reset(request):
-#     if request.method == 'POST':
-#         form = PasswordResetForm(request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('login')
-#         else:
-#             form = PasswordResetForm
-    
-#     return render(request, 'core/forgot_password.html', {'form': form })
