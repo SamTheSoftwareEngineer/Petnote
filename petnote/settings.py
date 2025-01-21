@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os
+import sys
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -142,12 +143,30 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+LOGIN_REDIRECT_URL = '/'
 
 # # Email settings
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'apikey'  # This is a literal string, not your username
-# EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY')  # Load your API key from environment variables
-# DEFAULT_FROM_EMAIL = 'Petnote <contact@mypetnote.com>'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('SENDGRID_USERNAME')  
+EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY') 
+DEFAULT_FROM_EMAIL = 'Petnote <contact@mypetnote.com>'
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+TESTING = "test" in sys.argv
+
+if not TESTING:
+    INSTALLED_APPS = [
+        *INSTALLED_APPS,
+        "debug_toolbar",
+    ]
+    MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        *MIDDLEWARE,
+    ]
