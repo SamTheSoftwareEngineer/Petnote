@@ -13,6 +13,6 @@ class Activity(models.Model):
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False)
     notes = models.TextField(blank=True)
-
+    
     def __str__(self):
         return f"{self.pet.name} - {self.name} ({self.date_completed})"

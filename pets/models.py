@@ -11,7 +11,8 @@ class Pet(models.Model):
     weight = models.IntegerField()
     breed = models.CharField(max_length=100, blank=True)
     birth_date = models.DateField(blank=True, null=True)
-
+    medical_notes = models.TextField(blank=True, null=True)
+    vaccination_date = models.DateField(blank=True, null=True)
     def __str__(self):
-        return self.name
+        return f"{self.name} - ({self.owner.username})"
     

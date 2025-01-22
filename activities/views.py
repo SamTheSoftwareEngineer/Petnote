@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Activity
 from .forms import ActivityForm
 from pets.models import Pet
+from django.contrib.auth.decorators import login_required
 
 
 def add_activity(request, pet_id):
@@ -49,3 +50,10 @@ def delete_activity(request, activity_id):
     pet_id = activity.pet.id  # Save the pet ID before deleting
     activity.delete()
     return redirect('pet_detail', pet_id=pet_id)  # Redirect back to the pet detail page
+
+@login_required
+def toggle_activity(request, activity_id):
+    activity = get_object_or_404(Activity, id=activity_id)
+    activity.completed = not activity.completed
+    activity.save()
+    return redirect('pet_detail', pet_id=activity.pet.id)
