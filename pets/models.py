@@ -14,5 +14,5 @@ class Pet(models.Model):
     medical_notes = models.TextField(blank=True, null=True)
     vaccination_date = models.DateField(blank=True, null=True)
     def __str__(self):
-        return f"{self.name} - ({self.owner.username})"
+        return f"{self.name} - ({self.user.username})"
     
