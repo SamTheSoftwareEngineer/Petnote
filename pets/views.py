@@ -3,6 +3,8 @@ from .models import Pet
 from activities.models import Activity
 from .forms import PetForm
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import localtime
+
 # Create your views here.
 @login_required
 def pet_list(request):
@@ -30,8 +32,16 @@ def add_pet(request):
 def pet_detail(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
     activities = Activity.objects.filter(pet=pet)  # Filter activities for this specific pet
+    today = localtime().date()
+    todays_activities = activities.filter(date_completed__date=today).order_by('date_completed')
+    past_activities = pet.activities.exclude(date_completed__date=today).order_by('-date_completed')
     
-    return render(request, 'pets/pet_detail.html', {'pet': pet, 'activities': activities})
+    return render(request, 'pets/pet_detail.html',
+                 {'pet': pet, 
+                  'todays_activities': todays_activities,
+                  'past_activities': past_activities,
+                  'activities': activities}
+                  )
 
 
 @login_required
