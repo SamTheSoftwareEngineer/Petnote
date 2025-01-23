@@ -31,11 +31,11 @@
             </div>
 
             <!-- Activities Section -->
-            <h3 class="text-xl font-semibold mb-4">Logged Activities</h3>
+            <h3 class="text-xl font-semibold mb-4">Today's Activities</h3>
             <div class="mb-4">
-                {% if activities %}
+                {% if todays_activities %}
                     <ul>
-                        {% for activity in activities %}
+                        {% for activity in todays_activities %}
                         <li class="border-b py-2">
                             <strong>{{ activity.name }}</strong><br>
                             <span class="text-sm text-gray-600">{{ activity.description }}</span><br>
@@ -52,6 +52,22 @@
                     </ul>
                 {% else %}
                     <p class="text-gray-600">No activities logged yet.</p>
+                {% endif %}
+            </div>
+
+            <!-- Past Activities Section -->
+            <div class="mb-4">
+                <h2><strong>Past Activity Log</strong></h2>
+                {% if past_activities %}
+                  <ul>
+                    {% for activity in past_activities %}
+                      <li>
+                        {{ activity.description }} - {{ activity.date_completed}}{% if activity.completed %} (Completed){% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>No past activities yet.</p>
                 {% endif %}
             </div>
         </div>
