@@ -4,27 +4,46 @@ from .models import Activity
 from .forms import ActivityForm
 from pets.models import Pet
 from django.contrib.auth.decorators import login_required
+from datetime import datetime 
+from django.utils.timezone import make_aware, get_current_timezone
 
-
+@login_required
 def add_activity(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
 
     if request.method == "POST":
         form = ActivityForm(request.POST)
         if form.is_valid():
-            # Save the new activity
-            activity = form.save(commit=False)
-            print('Saving activity...')
-            activity.pet = pet  # Assign the pet to the activity
-            print('Assigning pet to activity...')
-            activity.save()
-            print('Activity saved! Redirecting...')
+            # Extract the date and time from the form
+            date_completed = request.POST.get('date_completed')
+            time_completed = request.POST.get('time_completed')
 
-            # Redirect to the pet detail page
-            return redirect('pet_detail', pet_id=pet_id) 
-        else: 
+            # Check if both date and time are provided
+            if date_completed and time_completed:
+                # Combine date and time into a single datetime object
+                naive_datetime = datetime.strptime(f"{date_completed} {time_completed}", "%Y-%m-%d %H:%M")
+
+                # Convert to aware datetime
+                aware_datetime = make_aware(naive_datetime, get_current_timezone())
+                # Save the activity with the combined datetime to the database
+                activity = form.save(commit=False)
+                activity.date_completed = aware_datetime
+                activity.pet = pet  # Assign the pet to the activity    
+
+                print('Saving activity...')
+                activity.save()
+                print('Activity saved! Redirecting...')
+
+                # Redirect to the pet detail page
+                return redirect('pet_detail', pet_id=pet_id) 
+            else:
+                # If either date or time is missing, show an error message
+                form.add_error('date_completed', "Please provide both date and time.")
+                form.add_error('time_completed', "Please provide both date and time.")
+        
+        else:
             print("Form errors:", form.errors)
-
+    
     else:
         # If the request method is GET, create an empty form
         form = ActivityForm()
@@ -33,7 +52,7 @@ def add_activity(request, pet_id):
         'form': form,
         'pet': pet
     })
-
+      
 def edit_activity(request, pk):
     activity = get_object_or_404(Activity, pk=pk)
     if request.method == "POST":
