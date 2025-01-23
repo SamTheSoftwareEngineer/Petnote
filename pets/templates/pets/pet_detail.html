@@ -62,8 +62,11 @@
                   <ul>
                     {% for activity in past_activities %}
                       <li>
-                        {{ activity.description }} - {{ activity.date_completed}}{% if activity.completed %} (Completed){% endif %}
+                        {{ activity.description }} - {{ activity.date_completed}}{% if activity.completed %} (Completed){% endif %} 
+                        <a href="{% url 'delete_activity' activity.id %}" class="text-red-500 hover:text-red-700 text-sm" onclick="return confirm('Are you sure you want to delete this activity?');">Delete</a>
+                        <a href="{% url 'edit_activity' activity.id %}" class="text-blue-500 hover:underline text-sm">Edit</a>
                       </li>
+                      
                     {% endfor %}
                   </ul>
                 {% else %}
