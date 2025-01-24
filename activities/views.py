@@ -6,6 +6,7 @@ from pets.models import Pet
 from django.contrib.auth.decorators import login_required
 from datetime import datetime 
 from django.utils.timezone import make_aware, get_current_timezone
+from django.db.models import Count 
 
 @login_required
 def add_activity(request, pet_id):
@@ -76,3 +77,49 @@ def toggle_activity(request, activity_id):
     activity.completed = not activity.completed
     activity.save()
     return redirect('pet_detail', pet_id=activity.pet.id)
+
+@login_required
+def activity_report(request, pet_id):
+    # Grab the pet object
+    pet = get_object_or_404(Pet, id=pet_id)
+    # Get all activities for the pet
+    activities = Activity.objects.filter(pet=pet)
+
+    # Apply filtering (if the user entered filters)
+    # Fetch start_date and end_date from GET parameters
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    # Initialize the activities queryset
+    activities = pet.activities.all()
+
+    # Parse and apply date filters if provided
+    if start_date:
+        try:
+            start_date = datetime.strptime(start_date, "%Y-%m-%d")
+            activities = activities.filter(date_completed__gte=start_date)
+        except ValueError:
+            start_date = None  # Invalid date input is ignored
+    if end_date:
+        try:
+            end_date = datetime.strptime(end_date, "%Y-%m-%d")
+            activities = activities.filter(date_completed__lte=end_date)
+        except ValueError:
+            end_date = None  # Invalid date input is ignored
+
+    # Apply activity filter if provided
+    activity = request.GET.get('activity')
+    if activity:
+        activities = activities.filter(activity=activity)
+
+    # Generate a summary grouped by activity type
+    summary = activities.values('activity').annotate(total=Count('id'))
+
+    return render(request, 'activity_report.html', 
+                  {'pet': pet, 
+                   'summary': summary, 
+                   'activities': activities,
+                   'start_date': start_date,
+                   'end_date': end_date
+                   })
+                
