@@ -89,6 +89,11 @@
             <a href="{% url 'pet_list' %}" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2"> 
                 Back to Pet List 
             </a>
+            <a>
+                <button class="bg-pink-400 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-2">
+                    <a href="{% url 'activity_report' pet.id %}">See Activity Report</a>
+                </button>
+            </a>
         </div>
     </div>
 </body>
