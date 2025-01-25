@@ -108,6 +108,8 @@ def activity_report(request, pet_id):
             end_date = None  # Invalid date input is ignored
 
     # Apply activity filter if provided
+    # TODO: Figure out how to filter based on activity type - might need to adjust the model to include
+    # built in activities as types for filtering
     activity = request.GET.get('activity')
     if activity:
         activities = activities.filter(activity=activity)
