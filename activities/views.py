@@ -39,9 +39,7 @@ def add_activity(request, pet_id):
                 return redirect('pet_detail', pet_id=pet_id) 
             else:
                 # If either date or time is missing, show an error message
-                form.add_error('date_completed', "Please provide both date and time.")
-                form.add_error('time_completed', "Please provide both date and time.")
-        
+                form.add_error('date_completed', "Please provide both date and time.")        
         else:
             print("Form errors:", form.errors)
     
@@ -82,10 +80,12 @@ def toggle_activity(request, activity_id):
 def activity_report(request, pet_id):
     # Grab the pet object
     pet = get_object_or_404(Pet, id=pet_id)
+
     # Get all activities for the pet
     activities = Activity.objects.filter(pet=pet)
 
     # Apply filtering (if the user entered filters)
+
     # Fetch start_date and end_date from GET parameters
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
@@ -99,20 +99,18 @@ def activity_report(request, pet_id):
             start_date = datetime.strptime(start_date, "%Y-%m-%d")
             activities = activities.filter(date_completed__gte=start_date)
         except ValueError:
-            start_date = None  # Invalid date input is ignored
+            start_date = None 
     if end_date:
         try:
             end_date = datetime.strptime(end_date, "%Y-%m-%d")
             activities = activities.filter(date_completed__lte=end_date)
         except ValueError:
-            end_date = None  # Invalid date input is ignored
-
-    # Apply activity filter if provided
-    # TODO: Figure out how to filter based on activity type - might need to adjust the model to include
-    # built in activities as types for filtering
-    activity = request.GET.get('activity')
-    if activity:
-        activities = activities.filter(activity=activity)
+            end_date = None  
+    
+    # TODO: Apply activity filter if provided
+    activity_type = request.GET.get('activity')
+    if activity_type:
+        activities = activities.filter(activity_type=activity_type)
 
     # Generate a summary grouped by activity type
     summary = activities.values('activity').annotate(total=Count('id'))
@@ -122,6 +120,7 @@ def activity_report(request, pet_id):
                    'summary': summary, 
                    'activities': activities,
                    'start_date': start_date,
-                   'end_date': end_date
+                   'end_date': end_date,
+                   'ACTIVITY_CHOICES': Activity.ACTIVITY_CHOICES,
                    })
                 

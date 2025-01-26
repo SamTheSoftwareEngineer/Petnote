@@ -30,7 +30,7 @@
         <tr class="{% if forloop.counter|divisibleby:2 %}bg-gray-50{% else %}bg-white{% endif %} border-t">
           <td class="px-6 py-4 border border-gray-300">{{ activity.date_completed|date:"Y-m-d" }}</td>
           <td class="px-6 py-4 border border-gray-300">{{ activity.date_completed|time:"H:i" }}</td>
-          <td class="px-6 py-4 border border-gray-300">{{ activity.name }}</td>
+          <td class="px-6 py-4 border border-gray-300">{{ activity.activity_name }}</td>
           <td class="px-6 py-4 border border-gray-300">{{ activity.description }}</td>
         </tr>
       {% endfor %}
@@ -51,14 +51,9 @@
   <label for="activity">Activity:</label>
   <select name="activity" id="activity" class="border border-gray-300 rounded px-2 py-1">
     <option value="">All</option>
-    <option value="Walk" {% if request.GET.activity == "Walk" %}selected{% endif %}>Walk</option>
-    <option value="Vet Visit" {% if request.GET.activity == "Vet Visit" %}selected{% endif %}>Vet Visit</option>
-    <option value="Training" {% if request.GET.activity == "Training" %}selected{% endif %}>Training</option>
-    <option value="Medicine" {% if request.GET.activity == "Medicine" %}selected{% endif %}>Medicine</option>
-    <option value="Play" {% if request.GET.activity == "Play" %}selected{% endif %}>Play</option>
-    <option value="Feed" {% if request.GET.activity == "Feed" %}selected{% endif %}>Feed</option>
-    <option value="Groom" {% if request.GET.activity == "Groom" %}selected{% endif %}>Groom</option>
-    <option value="Other" {% if request.GET.activity == "Other" %}selected{% endif %}>Other</option>
+    {% for choice, display in ACTIVITY_CHOICES %}
+    <option value="{{ choice }}" {% if request.GET.activity == choice %}selected{% endif %}>{{ display }}</option>
+    {% endfor %}
   </select>
 
   <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Filter</button>

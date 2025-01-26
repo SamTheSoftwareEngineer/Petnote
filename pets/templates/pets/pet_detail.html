@@ -37,7 +37,7 @@
                     <ul>
                         {% for activity in todays_activities %}
                         <li class="border-b py-2">
-                            <strong>{{ activity.name }}</strong><br>
+                            <strong>{{ activity.activity_name }}</strong><br>
                             <span class="text-sm text-gray-600">{{ activity.description }}</span><br>
                             <span class="text-sm text-gray-500">Completed: {{ activity.is_completed|yesno:"Yes,No" }}</span><br>
                             <span class="text-sm text-gray-500">Date: {{ activity.date_completed }}</span>
