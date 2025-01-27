@@ -26,4 +26,4 @@ class Activity(models.Model):
     notes = models.TextField(blank=True)
     
     def __str__(self):
-        return f"{self.pet.name} - {self.name} ({self.date_completed})"
+        return f"{self.pet.name} - {self.activity_name} ({self.date_completed})"
