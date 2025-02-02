@@ -4,7 +4,7 @@ from .models import Activity
 from .forms import ActivityForm
 from pets.models import Pet
 from django.contrib.auth.decorators import login_required
-from datetime import datetime 
+from datetime import datetime
 from django.utils.timezone import make_aware, get_current_timezone
 from django.db.models import Count 
 
@@ -107,7 +107,6 @@ def activity_report(request, pet_id):
         except ValueError:
             end_date = None  
     
-    # TODO: Apply activity filter if provided
     activity_type = request.GET.get('activity')
     if activity_type:
         activities = activities.filter(activity_type=activity_type)
