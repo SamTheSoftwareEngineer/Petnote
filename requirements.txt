@@ -60,12 +60,11 @@ pure-eval==0.2.2
 pycparser==2.19
 Pygments==2.15.1
 pytest==7.4.2
+pytest-django==4.9.0
 python-dateutil==2.8.2
 python-decouple==3.8
 python-dotenv==1.0.1
 python-http-client==3.3.7
-psycopg==3.2.3
-psycopg-binary==3.2.3
 requests==2.31.0
 sendgrid==6.11.0
 simplegeneric==0.8.1
