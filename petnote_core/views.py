@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib import messages
+from pets.models import Pet
+from .forms import ProfileUpdateForm
 
 
 
@@ -13,11 +15,26 @@ def index(request):
         # If the user is not authenticated, render the index template
         return render(request, 'core/index.html')
 
+
 @login_required
 def profile_view(request):
-    # TODO: Add profile view logic
-    pass
-    
+    user = request.user
+    pets_count = Pet.objects.filter(user=user).count()  # Count user’s pets
+
+    if request.method == "POST":
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")  # Redirect after updating
+    else:
+        form = ProfileUpdateForm(instance=user)
+
+    return render(request, "core/profile.html", {
+        "user": user,
+        "pets_count": pets_count,
+        "form": form
+    })
+
 
 def signup(request):
     """Handles user registration and sends a verification email."""
