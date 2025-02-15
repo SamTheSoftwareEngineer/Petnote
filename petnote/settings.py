@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') 
 
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 
@@ -68,7 +69,7 @@ ROOT_URLCONF = "petnote.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR /'petnote_core'/ "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,6 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'petnote_core.CustomUser'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -145,7 +148,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/'
 
-# # Email settings
+LOGOUT_REDIRECT_URL = '/thanks/'
+
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587

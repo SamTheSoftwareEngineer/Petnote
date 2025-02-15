@@ -3,28 +3,49 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<div class="bg-white p-4 shadow rounded-lg">
-    <h1 class="text-2xl font-bold mb-4">Profile</h1>
-    {% if profile.image %}
-        <img src="{{ profile.image.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-4">
-    {% else %}
-        <div class="w-32 h-32 rounded-full bg-gray-300 mb-4"></div>
-    {% endif %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-6 shadow-lg rounded-lg w-full max-w-2xl">
+        <h1 class="text-3xl font-bold mb-6">Profile</h1>
 
-    <a href="{% url 'update_username' %}" class="text-blue-500 hover:underline">Change Username</a>
+        <!-- Profile Image -->
+        <div class="flex flex-col items-center">
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Profile Picture" class="w-32 h-32 rounded-full mb-4 border-4 border-gray-300 shadow">
+            {% else %}
+                <div class="w-32 h-32 rounded-full bg-gray-300 mb-4"></div>
+            {% endif %}
+        </div>
 
-    <h2 class="text-lg font-semibold">Welcome, {{ request.user.username }}</h2>
-    {% if pets_count %}
-        <p>Total Pets: {{ pets_count }}</p>
-    {% else %}
-        <p> No pets logged yet </p>
-    {% endif %}
+        <!-- Change Username -->
+        <div class="text-center">
+            <a href="{% url 'update_username' %}" class="text-blue-500 hover:underline">Change Username</a>
+        </div>
 
-    <h3 class="text-lg font-semibold mt-4">Update Profile</h3>
-    <form method="post" enctype="multipart/form-data" class="mt-2">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-    </form>
+        <!-- Welcome Message -->
+        <h2 class="text-lg font-semibold text-gray-800 text-center mt-4">
+            Welcome, {{ request.user.username }}
+        </h2>
+
+        <!-- Pet Count -->
+        <p class="text-center text-gray-600">
+            {% if pets_count %}
+                Total Pets: {{ pets_count }}
+            {% else %}
+                No pets logged yet
+            {% endif %}
+        </p>
+
+        <!-- Update Profile -->
+        <h3 class="text-lg font-semibold mt-6">Update Profile</h3>
+        <form method="post" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            <div class="space-y-4">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Save Changes
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}

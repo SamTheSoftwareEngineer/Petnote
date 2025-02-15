@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+            Resend Verification Email
+        </h2>
+
+        <form method="post" action="{% url 'resend_verification' %}" class="space-y-4">
+            {% csrf_token %}
+            
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
+                >
+            </div>
+
+            <button 
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md"
+            >
+                Resend Verification Email
+            </button>
+        </form>
+
+        <p class="text-center text-gray-600 text-sm mt-4">
+            Check your spam folder if you don't receive an email within a few minutes.
+        </p>
+    </div>
+</div>
+{% endblock content %}
+
+

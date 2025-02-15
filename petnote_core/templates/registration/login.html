@@ -17,6 +17,18 @@
         <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
             Log In
         </button>
+        {% if form.errors %}
+        <div class="text-red-500 text-sm mt-1 text-center">
+            {% if form.non_field_errors %}
+                <p>{{ form.non_field_errors }}</p>
+            {% endif %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <p>{{ field.label }}: {{ field.errors }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
     </form>
     <p class="mt-4 text-center text-gray-600">
         Don't have an account? <a href="{% url 'signup' %}" class="text-blue-500 hover:underline">Sign Up</a>

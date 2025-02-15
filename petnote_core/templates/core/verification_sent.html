@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
+    <div class="bg-white shadow-md rounded-2xl p-8 max-w-md text-center">
+        <h1 class="text-2xl font-bold text-gray-800">Verify Your Email</h1>
+        <p class="mt-4 text-gray-600">
+            A verification email has been sent to your email address.
+            Please check your inbox and follow the instructions to activate your account.
+        </p>
+        
+        <div class="mt-6">
+            <svg class="w-16 h-16 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 9.4L12 13.5m0 0L7.5 9.4M12 13.5V3m0 10.5L7.5 9.4M12 13.5l4.5-4.1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+
+        <p class="mt-4 text-sm text-gray-500">
+            Didn't receive an email? Check your spam folder or 
+            <a href="{% url 'resend_verification' %}" class="text-blue-600 font-semibold hover:underline">
+                resend the verification email
+            </a>.
+        </p>
+
+        <a href="{% url 'login' %}" class="mt-6 inline-block bg-blue-500 text-white px-6 py-2 rounded-xl shadow hover:bg-blue-600 transition">
+            Go to Login
+        </a>
+    </div>
+</div>
+{% endblock %}

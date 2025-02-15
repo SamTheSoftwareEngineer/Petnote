@@ -1,6 +1,6 @@
 from django.db import models
 from pets.models import Pet
-from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 
 class Activity(models.Model):
@@ -16,7 +16,7 @@ class Activity(models.Model):
     ]
 
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name="activities")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     activity_name = models.CharField(max_length=100, default="")
     activity_type = models.CharField(max_length=100, choices=ACTIVITY_CHOICES, default='Select Activity')
     activity = models.CharField(max_length=100)
