@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') 
 
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 
@@ -68,7 +69,7 @@ ROOT_URLCONF = "petnote.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR /'petnote_core'/ "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
