@@ -4,7 +4,10 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class CustomUser(AbstractUser):
-    pass
+    profile_image = models.ImageField(upload_to='profile_images', null=True, blank=True)
+    bio = models.TextField(blank=True, null=True)
+    class Meta:
+        db_table = 'petnote_core_customuser'
 
 class UserProfile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
