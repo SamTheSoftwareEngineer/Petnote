@@ -27,5 +27,5 @@ if not settings.TESTING:
         path("", include("petnote_core.urls")),
         path("pets/", include("pets.urls")),
         path("activities/", include("activities.urls")),
-        path("accounts/", include("django.contrib.auth.urls")),
+        path('accounts/', include('allauth.urls')),  # Django allauth URLs
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + debug_toolbar_urls()
