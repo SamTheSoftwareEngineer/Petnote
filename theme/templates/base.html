@@ -1,4 +1,5 @@
 {% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,15 +25,15 @@
             <!-- Right Section -->
             <div>
                 {% if user.is_authenticated %}
-                    <form action="{% url 'logout' %}" method="post" class="inline">
+                    <form action="{% url 'account_logout' %}" method="post" class="inline">
                         {% csrf_token %}
                         <button type="submit" class="text-white hover:underline bg-transparent border-0 cursor-pointer">
                             Logout
                         </button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="mr-4 text-white hover:underline">Login</a>
-                    <a href="{% url 'signup' %}" class="text-white hover:underline">Sign Up</a>
+                    <a href="{% url 'account_login' %}" class="mr-4 text-white hover:underline">Login</a>
+                    <a href="{% url 'account_signup' %}" class="text-white hover:underline">Sign Up</a>
                 {% endif %}
             </div>
         </div>
