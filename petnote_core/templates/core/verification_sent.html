@@ -16,11 +16,9 @@
         </div>
 
         <p class="mt-4 text-sm text-gray-500">
-            Didn't receive an email? Check your spam folder or 
-            <a href="{% url 'resend_verification' %}" class="text-blue-600 font-semibold hover:underline">
-                resend the verification email
-            </a>.
+            Didn't receive an email? Check your spam folder or you can <a href="{% url 'accounts:reauthenticate' %}" class="text-blue-500 hover:underline">request a new one</a>.
         </p>
+            
 
         <a href="{% url 'login' %}" class="mt-6 inline-block bg-blue-500 text-white px-6 py-2 rounded-xl shadow hover:bg-blue-600 transition">
             Go to Login
