@@ -8,7 +8,7 @@ from .forms import ProfileUpdateForm
 
 
 def index(request):
-    # Check if the user is authenticated and redirect to the pet page 
+    # Check if the user is authenticated and redirect to the profilepage 
     if request.user.is_authenticated:
         return redirect('profile')
     else:
@@ -53,10 +53,14 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'account/signup.html', {'form': form})
 
-def thanks_view(request):
-    return render(request, 'core/thanks.html')
+def verification_sent(request):
+    return render(request, 'core/verification_sent.html')
+
+def verification_success(request):
+    return render(request, 'core/verification_success.html')
+
 
 @login_required
 def update_username(request):
@@ -70,3 +74,5 @@ def update_username(request):
 
     return render(request, 'core/update_username.html', {'form': form})
 
+def thanks_view(request):
+    return render(request, 'core/thanks.html')
