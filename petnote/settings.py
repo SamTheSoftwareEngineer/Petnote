@@ -15,6 +15,8 @@ import os
 import sys
 from dotenv import load_dotenv
 
+
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,7 +51,24 @@ INSTALLED_APPS = [
     'petnote_core',
     'activities',
     'django_fastdev',
+    'allauth',
+    'allauth.account', 
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'django_extensions',
 ]
+
+
+
+# Use email for authentication instead of username
+ACCOUNT_LOGIN_METHOD = {'email'}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+SOCIALACCOUNT_AUTO_SIGNUP = True  # Auto-create user if they log in with Google
+
+
+SITE_ID = 1
 
 TAILWIND_APP_NAME = 'theme' 
 
@@ -62,6 +81,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "petnote.urls"
@@ -77,6 +97,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -120,6 +141,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'petnote_core.CustomUser'
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -146,18 +175,24 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'profile/'
 
-LOGOUT_REDIRECT_URL = '/thanks/'
+ACCOUNT_LOGOUT_REDIRECT = '/thanks/'
+
+ACCOUNT_SIGNUP_REDIRECT_URL = 'verification-sent/'  # Custom redirect after sign-up
+
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'petnote_core.forms.CustomSignupForm'
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('SENDGRID_USERNAME')  
-EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY') 
-DEFAULT_FROM_EMAIL = 'Petnote <contact@mypetnote.com>'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'smtp.outlook.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('SENDGRID_USERNAME')  
+# EMAIL_HOST_PASSWORD = os.getenv('SENDGRID_API_KEY') 
+# DEFAULT_FROM_EMAIL = 'Petnote <contact@mypetnote.com>'
 
 
 INTERNAL_IPS = [
@@ -175,3 +210,21 @@ if not TESTING:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
         *MIDDLEWARE,
     ]
+
+# Social login settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': os.getenv('client_id'),
+            'secret': os.getenv('secret'),
+        },
+        'SCOPE': [ 'profile', 'email',],
+        'AUTH_PARAMS': { 'access_type': 'online'},
+        'VERIFIED_EMAIL': True,
+        },
+    }
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
