@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% load static tailwind_tags %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg">
+    <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">
+        Welcome back! <br> Please log in to continue:
+    </h1>
+    
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <div>
+            <label for="id_username" class="block text-gray-700 font-medium mb-2">Username</label>
+            <input type="text" name="username" id="id_username" class="w-full p-2 border rounded-lg" required>
+        </div>
+        
+        <div>
+            <label for="id_password" class="block text-gray-700 font-medium mb-2">Password</label>
+            <input type="password" name="password" id="id_password" class="w-full p-2 border rounded-lg" required>
+        </div>
+        
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+            Log In
+        </button>
+
+        <!-- Google Sign-In Button -->
+        <div class="mt-4">
+            <a href="{% provider_login_url 'google' %}" 
+               class="flex items-center justify-center gap-3 w-full py-2 border border-gray-300 rounded-lg 
+                      text-gray-700 hover:bg-gray-100 transition">
+                <img class="w-5 h-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="Google Logo">
+                <span class="text-sm font-medium">Sign in with Google</span>
+            </a>
+        </div>
+
+        {% if form.errors %}
+        <div class="text-red-500 text-sm mt-1 text-center">
+            {% if form.non_field_errors %}
+                <p>{{ form.non_field_errors }}</p>
+            {% endif %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <p>{{ field.label }}: {{ field.errors }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </form>
+
+    <p class="mt-4 text-center text-gray-600">
+        Don't have an account? <a href="{% url 'account_signup' %}" class="text-blue-500 hover:underline">Sign Up</a> <br>
+        <a href="{% url 'account_reset_password' %}" class="text-blue-500 hover:underline">Forgot your password?</a>
+    </p>
+</div>
+{% endblock %}
