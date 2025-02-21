@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django_extensions',
+    'django.contrib.sites',
 ]
 
 
@@ -175,15 +176,13 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = 'profile/'
-
+ACCOUNT_LOGIN_REDIRECT_URL = '/profile/'
+ACCOUNT_SIGNUP_REDIRECT_URL = '/profile/'
 ACCOUNT_LOGOUT_REDIRECT = '/thanks/'
 
-ACCOUNT_SIGNUP_REDIRECT_URL = 'verification-sent/'  # Custom redirect after sign-up
-
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-
-ACCOUNT_SIGNUP_FORM_CLASS = 'petnote_core.forms.CustomSignupForm'
+ACCOUNT_FORMS = {
+    'signup': 'petnote_core.forms.CustomUserCreationForm',
+}
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
