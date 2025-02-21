@@ -1,40 +1,52 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm 
 
 User = get_user_model()
+
+# Form to create a new user
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model= User
         fields = (
             "email",
-            "username"
+            "first_name",
+            "last_name",
+            "password1",
+            "password2"
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300'
+            })
+
+# Form to change email
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = (
             "email",
-            "username"
         )
 
+# Form to update profile
 class ProfileUpdateForm(forms.ModelForm):
     profile_image = forms.ImageField(required=False)
     bio = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         model = User
-        fields = ["username", "bio", "profile_image"]
+        fields = ["first_name", "bio", "profile_image"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300'
+            })
+
+
     
-class CustomSignupForm(SignupForm):
-    email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}))
-    email2 = forms.EmailField(label="Confirm Email", widget=forms.EmailInput(attrs={'placeholder': 'Confirm your email'}))
-
-    def clean_email2(self):
-        email1 = self.cleaned_data.get("email")
-        email2 = self.cleaned_data.get("email2")
-
-        if email1 != email2:
-            raise forms.ValidationError("The two email addresses must match.")
-        return email2
