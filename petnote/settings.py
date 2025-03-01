@@ -49,7 +49,17 @@ INSTALLED_APPS = [
     'petnote_core',
     'activities',
     'django_fastdev',
+    'stripe_payments',
+    'djstripe',
 ]
+
+STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
+STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
+STRIPE_LIVE_MODE = False  # Change to True in production
+DJSTRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', 'whsec_xxx')
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+
+STRIPE_PRICING_TABLE_ID = 'prctbl_1QwRpoP49rc5gpD8DtlJFE2Z'
 
 TAILWIND_APP_NAME = 'theme' 
 
