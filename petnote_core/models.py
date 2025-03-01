@@ -6,6 +6,9 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     profile_image = models.ImageField(upload_to='profile_images', null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
+    stripe_customer_id = models.CharField(max_length=250, blank=True, null=True)
+    stripe_subscription_id = models.CharField(max_length=250, blank=True, null=True)
+    is_subscribed = models.BooleanField(default=False)
     class Meta:
         db_table = 'petnote_core_customuser'
 
